@@ -1,0 +1,131 @@
+<style type="text/css">
+
+ .businessCard {
+ 	padding: 1em;
+ 	margin: 1em;
+ 	font-family: helvetica;
+ 	font-style: bold;
+ 	font-size: 2em;
+ }
+ .formInput {
+ 	border: 0.5em solid maroon;
+ 	margin: 3em;
+ 	width: 750px;
+ 	height: 250px;
+ }
+ .entryForm {
+ 	padding: 2em;
+ 	margin: 3em;
+ }
+ .addImage {
+ 	
+ }
+ h1 {
+ 	margin-left: 0.5em;
+ }
+
+</style>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Two-Way Data Binding Output</title>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+</head>
+<!-- Angular special html instructions start with ng; using modelTest as primary access module-->
+<body ng-app="modelTest">
+
+<h1>Two-Way Data Binding Output</h1>
+
+<div class="formInput businessCard">
+	<div class="row">
+
+		<div class = "col-md-6">
+	    	{{ user.firstName }} {{ user.lastName }}<br>
+	    	{{ user.email }}<br>
+	    	{{ user.dob }}<br>
+	    	{{ urlValue}}<br>
+		</div>
+
+	
+		<div class="col-md-6">
+	    	<img class="img-responsive" {{ display.image }}></image>
+		</div>
+    </div>
+</div>
+
+<h1>Enter Info to Create a Business Card</h1>
+<div class = "entryForm">
+<section class = "jumbotron">
+<!-- Novalidate disables the browser's default validation. Angular recommends
+     doing this in order to make a more consistent user experience across browsers -->
+	<form novalidate>
+		<div class="row">
+		    <label for="first_name">First Name</label>
+		    <input type="text" id="first_name" ng-model="user.firstName" ng-minlength="3" ng-maxlength="15" required>
+		      <p ng-show="userForm.name.$invalid && !userForm.firstName.$pristine" class="help-block">Your name is required.</p>
+		<span ng-show="user.firstName.$invalid" style="color: red">{{getValidationError(user.firstName)}}</span><br />
+		</div>
+		      <p ng-show="userForm.firstName.$error.minlength" class="help-block">First name is too short.</p>
+		  	  <p ng-show="userForm.firstName.$error.maxlength" class="help-block">First name is too long.</p>
+
+		<div class="row">
+		    <label for="last_name">Last Name</label>
+		    <input type="text" id="lastName" ng-model="user.lastName" ng-minlength="3" ng-maxlength="15" required>
+		      <p ng-show="userForm.lastName.$invalid && !userForm.lastName.$pristine" class="help-block">You name is required.</p>
+		      <p ng-show="userForm.lastName.$error.minlength" class="help-block">Last name is too short.</p>
+		  	  <p ng-show="userForm.lastName.$error.maxlength" class="help-block">Last name is too long.</p>
+		</div>
+
+
+	<div class="row col-md-6 form-control">
+
+		<div class="form-group">
+		    <label for="email">eMail</label>
+		    <input type="email" id="email" ng-model="user.email" required>
+		    <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Enter a valid email.</p>
+		</div>
+
+		<div class="form-group">
+	    	<label for="dob">Date of Birth</label>
+	    	<input type="date" id="date"  format="mm-dd-yyyy" name="input" ng-model="user.dob" placeholder="mm-dd-yyyy" maxlength="100" required>
+	    </div>
+
+	    <div class ="form-group">
+	    	<label for="urlEdit">Github URL:</label>
+    		<input id="urlEdit" type="url" ng-model="urlValue" maxlength="100" placeholder="Github URL"/>
+	    </div>
+
+	    <div class="form-group">
+			<label for="icon">Icon</label>
+			<select class="form-control" id="icon" ng-model="user.icon" required>
+				<option ng-repeat="pic in ['1', '2', '3', '4']">{{ pic }}</option>
+			</select>
+		</div
+
+<!-- 		disable SUBMIT BUTTON until form is valid -->	
+ <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Submit</button>
+
+	</form>
+</div>
+
+</section>
+
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
+<script type="text/javascript" src="/js/modelTest.js"></script>
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
