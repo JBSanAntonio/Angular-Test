@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Angular Controller-Test</title>
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
+</head>
+
+<body ng-app="controllerTest">
+  <div class="container">
+
+  <header>
+  	<h1>Add Items to Shopping Cart</h1>
+  </header>
+
+<!-- Attach CartController to the page.--> 
+	<main ng-controller="CartController as cart">
+		<form class="row col-sm-8 well" novalidate name="itemCart" ng-submit="cart.addItem(itemCart)">
+
+			<div class="form-group">
+				<label for"item">Item Name</label>
+				<input type="text" class="form-control" id="item" name="item" ng-model="cart.newItem.item" required>
+			</div>
+			
+			<div class="form-group">
+				<label for"cost">Item Cost</label>
+				<input type="number" class="form-control" id="cost"  name="cost" ng-model="cart.newItem.cost" required>
+			</div>
+<!-- Make sure the submit button is only enabled if the form is valid. (Hint: You will need to give the form a name and then use either the property $valid or $invalid from the form.) -->
+			<div class="form-group" ng-if="itemCart.$valid">
+				<input type="submit" class="btn btn-success" id="submit">
+			</div>
+		</form>
+
+	
+
+   <div class="row col-sm-12 well table-responsive">
+    <table id="table-format" class="table">
+      <thead>
+        	<tr>
+	        	<th>Item</th>
+	            <th>Cost</th>
+	            <th>Quantity</th>
+	            <th>Product Total</th>
+	        </tr>
+	  </thead>
+
+	  <tbody>
+        <tr ng:repeat="item in cart.items">
+            <td>{{ item.item }}</td>
+            <td>{{ item.cost | currency }}</td>
+             <td><input  class="quantityInput" name="quantity" type="number" id="quantity" value="{{ item.quantity }}" ng-model="item.quantity" required><label for"quantity"> Quantity</label></td>
+            <td>{{ item.cost * item.quantity | currency }}</td>
+            
+            <!-- Add a remove button for each item in the table. (Hint: ng-repeat creates a variable called $index. Your controller function will need to use this variable with splice() -->
+        	<td><button class="btn btn-warning" ng-click="cart.removeItem($index)">Remove</button></td>
+    		<!-- <td><button label for "item">Delete Item</button>
+    		<ng-submit-"cart.removeItem()"></td> -->
+        </tr>
+	  </tbody>
+    </table>
+
+    <table>
+	  <tbody>
+		<tr>
+			<th>Sub-total</th>
+			<td>{{ cart.getSubtotal() | currency }}</td>
+		</tr>
+		<tr>
+			<th>Sales Tax</th>
+			<td>{{ cart.getSalesTax() | currency }}</td>
+		</tr>
+		<tr>
+			<th>Shipping</th>
+			<td>{{ cart.getShippingCost() | currency }}</td>
+		</tr>
+		<tr>
+			<th>Grand Total</th>
+			<td>{{ cart.getGrandTotal() | currency }}</td>
+		</tr>
+	  </tbody>
+	</table>
+
+    </div>
+   </main>
+  </div>
+
+<script type="text/javascript" src="/js/controllerTest.js"></script>
+
+</body>
+</html>
